@@ -34,13 +34,14 @@ public class HotbarShiftHandler {
         if (HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarGuiLayers.contains(evt.getName())) {
             if (!isOffsetApplied) {
                 isOffsetApplied = true;
-                evt.getGuiGraphics().pose().translate(0.0F, -HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarOffset,
+                evt.getGuiGraphics().pose().translate(0.0F, -HoveringHotbar.CONFIG.get(ClientConfig.class)
+                                .getHotbarOffset(),
                         0.0F
                 );
             }
         } else if (isOffsetApplied) {
             isOffsetApplied = false;
-            evt.getGuiGraphics().pose().translate(0.0F, HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarOffset,
+            evt.getGuiGraphics().pose().translate(0.0F, HoveringHotbar.CONFIG.get(ClientConfig.class).getHotbarOffset(),
                     0.0F
             );
         }

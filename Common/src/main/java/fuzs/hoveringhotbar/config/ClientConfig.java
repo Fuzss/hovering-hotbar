@@ -17,37 +17,49 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ClientConfig implements ConfigCore {
-    @Config(description = "Height offset for the hotbar from the screen bottom.")
-    @Config.IntRange(min = 0)
-    public int hotbarOffset = 2;
     @Config(description = "Move the experience level display above the experience bar.")
     public boolean moveExperienceAboveBar = true;
 
+    private ModConfigSpec.IntValue hotbarOffsetValue;
     private ModConfigSpec.ConfigValue<List<? extends String>> hotbarGuiLayersValue;
     public Set<ResourceLocation> hotbarGuiLayers = Collections.emptySet();
 
+    public int getHotbarOffset() {
+        return this.hotbarOffsetValue.getAsInt();
+    }
+
+    public void updateHotbarOffset(int screenHeight, boolean moveUp) {
+        this.hotbarOffsetValue.set(Math.clamp(this.getHotbarOffset() + (moveUp ? 1 : -1), 0, screenHeight));
+    }
+
     @Override
     public void addToBuilder(ModConfigSpec.Builder builder, ValueCallback callback) {
+        this.hotbarOffsetValue = builder.comment("Height offset for the hotbar from the screen bottom.")
+                .defineInRange("hotbar_offset", 2, 0, Integer.MAX_VALUE);
         if (ModLoaderEnvironment.INSTANCE.getModLoader().isForgeLike()) {
             // We do not need to include {@link VanillaGuiLayers#SELECTED_ITEM_NAME} &amp; {@link VanillaGuiLayers#OVERLAY_MESSAGE},
             // both get their render height from {@link Gui#leftHeight} &amp; {@link Gui#rightHeight}.
-            List<String> defaultValue = Stream.of(RenderGuiLayerEvents.HOTBAR, RenderGuiLayerEvents.JUMP_METER,
-                    RenderGuiLayerEvents.EXPERIENCE_BAR, RenderGuiLayerEvents.SPECTATOR_TOOLTIP,
-                    RenderGuiLayerEvents.EXPERIENCE_LEVEL
-            ).map(ResourceLocation::toString).collect(Collectors.toList());
+            List<String> defaultValue = Stream.of(RenderGuiLayerEvents.HOTBAR,
+                    RenderGuiLayerEvents.JUMP_METER,
+                    RenderGuiLayerEvents.EXPERIENCE_BAR,
+                    RenderGuiLayerEvents.SPECTATOR_TOOLTIP,
+                    RenderGuiLayerEvents.EXPERIENCE_LEVEL).map(ResourceLocation::toString).collect(Collectors.toList());
             this.hotbarGuiLayersValue = builder.comment(
-                    "Defines a set of gui layers that should be shifted together with the hotbar.").defineList(
-                    "hotbar_gui_layers", defaultValue, () -> "",
-                    o -> o instanceof String s && ResourceLocationHelper.tryParse(s) != null
-            );
+                            "Defines a set of gui layers that should be shifted together with the hotbar.")
+                    .defineList("hotbar_gui_layers",
+                            defaultValue,
+                            () -> "",
+                            o -> o instanceof String s && ResourceLocationHelper.tryParse(s) != null);
         }
     }
 
     @Override
     public void afterConfigReload() {
         if (ModLoaderEnvironment.INSTANCE.getModLoader().isForgeLike()) {
-            this.hotbarGuiLayers = this.hotbarGuiLayersValue.get().stream().map(ResourceLocationHelper::parse).collect(
-                    ImmutableSet.toImmutableSet());
+            this.hotbarGuiLayers = this.hotbarGuiLayersValue.get()
+                    .stream()
+                    .map(ResourceLocationHelper::parse)
+                    .collect(ImmutableSet.toImmutableSet());
         }
     }
 }

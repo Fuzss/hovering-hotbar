@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import fuzs.puzzleslib.api.client.gui.v2.components.GuiGraphicsHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -18,7 +19,15 @@ public class HotbarSpriteHelper {
             guiGraphics.pose().translate(0.0F, 0.0F, -95.0F);
             int posX = guiGraphics.guiWidth() / 2 - 91 - 1 + player.getInventory().selected * 20;
             int posY = guiGraphics.guiHeight() - 22 - 1;
-            GuiGraphicsHelper.blitTiledSprite(guiGraphics, HOTBAR_SELECTION_SPRITE, posX, posY, 24, 24, 24, 23);
+            GuiGraphicsHelper.blitTiledSprite(guiGraphics,
+                    RenderType::guiTextured,
+                    HOTBAR_SELECTION_SPRITE,
+                    posX,
+                    posY,
+                    24,
+                    24,
+                    24,
+                    23);
             guiGraphics.pose().popPose();
             RenderSystem.disableBlend();
         }

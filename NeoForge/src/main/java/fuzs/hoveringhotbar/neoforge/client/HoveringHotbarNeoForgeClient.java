@@ -2,8 +2,10 @@ package fuzs.hoveringhotbar.neoforge.client;
 
 import fuzs.hoveringhotbar.HoveringHotbar;
 import fuzs.hoveringhotbar.client.HoveringHotbarClient;
+import fuzs.hoveringhotbar.data.client.ModLanguageProvider;
 import fuzs.hoveringhotbar.neoforge.client.handler.HotbarShiftHandler;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
@@ -16,6 +18,7 @@ public class HoveringHotbarNeoForgeClient {
     public HoveringHotbarNeoForgeClient() {
         ClientModConstructor.construct(HoveringHotbar.MOD_ID, HoveringHotbarClient::new);
         registerEventHandlers(NeoForge.EVENT_BUS);
+        DataProviderHelper.registerDataProviders(HoveringHotbar.MOD_ID, ModLanguageProvider::new);
     }
 
     private static void registerEventHandlers(IEventBus eventBus) {
