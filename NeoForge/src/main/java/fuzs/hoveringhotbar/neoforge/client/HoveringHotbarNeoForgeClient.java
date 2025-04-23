@@ -2,14 +2,15 @@ package fuzs.hoveringhotbar.neoforge.client;
 
 import fuzs.hoveringhotbar.HoveringHotbar;
 import fuzs.hoveringhotbar.client.HoveringHotbarClient;
+import fuzs.hoveringhotbar.client.helper.HotbarSpriteHelper;
+import fuzs.hoveringhotbar.config.ClientConfig;
 import fuzs.hoveringhotbar.data.client.ModLanguageProvider;
-import fuzs.hoveringhotbar.neoforge.client.handler.HotbarShiftHandler;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(value = HoveringHotbar.MOD_ID, dist = Dist.CLIENT)
@@ -22,9 +23,14 @@ public class HoveringHotbarNeoForgeClient {
     }
 
     private static void registerEventHandlers(IEventBus eventBus) {
-        // try to not push a pose on the stack when the event is cancelled
-        eventBus.addListener(EventPriority.LOW, HotbarShiftHandler::onBeforeRenderGui);
-        eventBus.addListener(HotbarShiftHandler::onAfterRenderGui);
-        eventBus.addListener(HotbarShiftHandler::onBeforeRenderGuiLayer);
+        // our gui layer system does not support modded layers, so use the native event here
+        eventBus.addListener((final RenderGuiLayerEvent.Pre evt) -> {
+            if (HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarGuiLayers.contains(evt.getName())) {
+                // not so great cancelling layer rendering, but NeoForge does not support wrapping by default
+                HotbarSpriteHelper.getLayerWithTranslation(evt.getLayer())
+                        .render(evt.getGuiGraphics(), evt.getPartialTick());
+                evt.setCanceled(true);
+            }
+        });
     }
 }
