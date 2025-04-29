@@ -15,6 +15,7 @@ import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
 
 import java.util.List;
 
@@ -38,21 +39,24 @@ public class HotbarSpriteHelper {
     }
 
     public static void blitHotbarSelectionSprite(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        if (Minecraft.getInstance().getCameraEntity() instanceof Player player) {
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0F, 0.0F, -95.0F);
-            int posX = guiGraphics.guiWidth() / 2 - 91 - 1 + player.getInventory().getSelectedSlot() * 20;
-            int posY = guiGraphics.guiHeight() - 22 - 1;
-            GuiGraphicsHelper.blitTiledSprite(guiGraphics,
-                    RenderType::guiTextured,
-                    HOTBAR_SELECTION_SPRITE,
-                    posX,
-                    posY,
-                    24,
-                    24,
-                    24,
-                    23);
-            guiGraphics.pose().popPose();
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR) {
+            if (minecraft.getCameraEntity() instanceof Player player) {
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(0.0F, 0.0F, -95.0F);
+                int posX = guiGraphics.guiWidth() / 2 - 91 - 1 + player.getInventory().getSelectedSlot() * 20;
+                int posY = guiGraphics.guiHeight() - 22 - 1;
+                GuiGraphicsHelper.blitTiledSprite(guiGraphics,
+                        RenderType::guiTextured,
+                        HOTBAR_SELECTION_SPRITE,
+                        posX,
+                        posY,
+                        24,
+                        24,
+                        24,
+                        23);
+                guiGraphics.pose().popPose();
+            }
         }
     }
 
