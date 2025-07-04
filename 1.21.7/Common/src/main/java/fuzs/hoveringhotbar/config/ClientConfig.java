@@ -18,8 +18,7 @@ public class ClientConfig implements ConfigCore {
     public boolean moveExperienceAboveBar = true;
     @Config(
             name = "hotbar_gui_layers",
-            description = "Defines a set of gui layers that should be shifted together with the hotbar.",
-            gameRestart = true
+            description = "Defines a set of gui layers that should be shifted together with the hotbar."
     )
     List<String> hotbarGuiLayersRaw = Collections.emptyList();
 
@@ -32,6 +31,7 @@ public class ClientConfig implements ConfigCore {
 
     public void updateHotbarOffset(int screenHeight, boolean moveUp) {
         this.hotbarOffsetValue.set(Math.clamp(this.getHotbarOffset() + (moveUp ? 1 : -1), 0, screenHeight));
+        this.hotbarOffsetValue.save();
     }
 
     @Override
