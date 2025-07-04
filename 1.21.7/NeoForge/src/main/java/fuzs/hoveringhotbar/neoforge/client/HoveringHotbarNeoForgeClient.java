@@ -27,7 +27,7 @@ public class HoveringHotbarNeoForgeClient {
         eventBus.addListener((final RenderGuiLayerEvent.Pre evt) -> {
             if (HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarGuiLayers.contains(evt.getName())) {
                 // not so great cancelling layer rendering, but NeoForge does not support wrapping by default
-                HotbarSpriteHelper.getLayerWithTranslation(evt.getLayer())
+                HotbarSpriteHelper.getLayerWithTranslation(evt.getLayer()::render)
                         .render(evt.getGuiGraphics(), evt.getPartialTick());
                 evt.setCanceled(true);
             }
