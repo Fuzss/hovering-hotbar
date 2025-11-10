@@ -8,7 +8,6 @@ import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -16,11 +15,10 @@ import java.util.Set;
 public class ClientConfig implements ConfigCore {
     @Config(description = "Move the experience level display above the experience bar.", gameRestart = true)
     public boolean moveExperienceAboveBar = true;
-    @Config(
-            name = "hotbar_gui_layers",
-            description = "Defines a set of gui layers that should be shifted together with the hotbar."
-    )
-    List<String> hotbarGuiLayersRaw = Collections.emptyList();
+    @Config(name = "hotbar_gui_layers",
+            description = "Defines a set of gui layers that should be shifted together with the hotbar.",
+            gameRestart = true)
+    List<String> hotbarGuiLayersRaw = List.of("enchantmentswitch:slot_overlay", "lockedinslots:slot_overlay");
 
     private ModConfigSpec.IntValue hotbarOffsetValue;
     public Set<ResourceLocation> hotbarGuiLayers;

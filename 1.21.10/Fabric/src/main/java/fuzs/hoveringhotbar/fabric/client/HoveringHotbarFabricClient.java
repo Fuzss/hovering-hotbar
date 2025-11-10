@@ -29,7 +29,7 @@ public class HoveringHotbarFabricClient implements ClientModInitializer {
                         return HotbarSpriteHelper.getLayerWithTranslation(hudElement::render)::render;
                     });
                 } catch (Exception exception) {
-                    HoveringHotbar.LOGGER.warn("Failed to replace gui layer {}", resourceLocation);
+                    // NO-OP
                 }
             }
         });
