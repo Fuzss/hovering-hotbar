@@ -7,6 +7,7 @@ import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.api.client.core.v1.context.KeyMappingsContext;
 import fuzs.puzzleslib.api.client.event.v1.ClientLifecycleEvents;
+import fuzs.puzzleslib.api.client.event.v1.ClientTickEvents;
 import fuzs.puzzleslib.api.client.event.v1.gui.CustomizeChatPanelCallback;
 import fuzs.puzzleslib.api.client.key.v1.KeyActivationHandler;
 import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
@@ -26,7 +27,7 @@ public class HoveringHotbarClient implements ClientModConstructor {
             HoveringHotbar.id("move_hotbar_down"));
     public static final ResourceLocation LEFT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("left_hotbar_offset");
     public static final ResourceLocation RIGHT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("right_hotbar_offset");
-    static final GuiLayersContext.Layer EMPTY_LAYER = (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
+    private static final GuiLayersContext.Layer EMPTY_LAYER = (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
         // NO-OP
     };
 
@@ -36,6 +37,7 @@ public class HoveringHotbarClient implements ClientModConstructor {
     }
 
     private static void registerEventHandlers() {
+        ClientTickEvents.END.register(HoveringHotbar.CONFIG.get(ClientConfig.class)::onEndClientTick);
         CustomizeChatPanelCallback.EVENT.register((GuiGraphics guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) -> {
             posY.mapInt((int value) -> value - HoveringHotbar.CONFIG.get(ClientConfig.class).getHotbarOffset());
         });
