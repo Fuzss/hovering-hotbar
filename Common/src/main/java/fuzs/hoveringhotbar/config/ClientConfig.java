@@ -5,6 +5,7 @@ import fuzs.puzzleslib.api.config.v3.Config;
 import fuzs.puzzleslib.api.config.v3.ConfigCore;
 import fuzs.puzzleslib.api.config.v3.ValueCallback;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
@@ -18,9 +19,12 @@ public class ClientConfig implements ConfigCore {
     @Config(name = "hotbar_gui_layers",
             description = "Defines a set of gui layers that should be shifted together with the hotbar.",
             gameRestart = true)
-    List<String> hotbarGuiLayersRaw = List.of("enchantmentswitch:slot_overlay", "lockedinslots:slot_overlay");
+    List<String> hotbarGuiLayersRaw = List.of("hotbarslotcycling:cycling_slots",
+            "enchantmentswitch:slot_overlay",
+            "lockedinslots:slot_overlay");
 
     private ModConfigSpec.IntValue hotbarOffsetValue;
+    private int configSaveDelay;
     public Set<ResourceLocation> hotbarGuiLayers;
 
     public int getHotbarOffset() {
@@ -29,7 +33,13 @@ public class ClientConfig implements ConfigCore {
 
     public void updateHotbarOffset(int screenHeight, boolean moveUp) {
         this.hotbarOffsetValue.set(Math.clamp(this.getHotbarOffset() + (moveUp ? 1 : -1), 0, screenHeight));
-        this.hotbarOffsetValue.save();
+        this.configSaveDelay = 20;
+    }
+
+    public void onEndClientTick(Minecraft minecraft) {
+        if (this.configSaveDelay > 0 && --this.configSaveDelay == 0) {
+            this.hotbarOffsetValue.save();
+        }
     }
 
     @Override
