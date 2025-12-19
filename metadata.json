@@ -1,0 +1,51 @@
+{
+    "mod": {
+        "id": "hoveringhotbar",
+        "group": "fuzs.hoveringhotbar",
+        "name": "Hovering Hotbar",
+        "version": "21.11.0",
+        "authors": [
+            "Fuzs"
+        ],
+        "description": "Makes your hotbar seemingly float in place by shifting it a few pixels upward.",
+        "license": "MPL-2.0"
+    },
+    "dependencies": [
+        {
+            "name": "fabricapi",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "forgeconfigapiport",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "puzzleslib",
+            "type": "required",
+            "platforms": [
+                "fabric",
+                "neoforge"
+            ]
+        }
+    ],
+    "links": [
+        {
+            "name": "github",
+            "slug": "hoveringhotbar"
+        }
+    ],
+    "environments": {
+        "client": "required",
+        "server": "unsupported"
+    },
+    "platforms": [
+        "fabric",
+        "neoforge"
+    ]
+}

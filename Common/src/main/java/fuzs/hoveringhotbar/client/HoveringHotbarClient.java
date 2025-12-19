@@ -17,7 +17,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 public class HoveringHotbarClient implements ClientModConstructor {
@@ -25,8 +25,8 @@ public class HoveringHotbarClient implements ClientModConstructor {
             HoveringHotbar.id("move_hotbar_up"));
     public static final KeyMapping MOVE_HOTBAR_DOWN_KEY_MAPPING = KeyMappingHelper.registerUnboundKeyMapping(
             HoveringHotbar.id("move_hotbar_down"));
-    public static final ResourceLocation LEFT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("left_hotbar_offset");
-    public static final ResourceLocation RIGHT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("right_hotbar_offset");
+    public static final Identifier LEFT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("left_hotbar_offset");
+    public static final Identifier RIGHT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("right_hotbar_offset");
     private static final GuiLayersContext.Layer EMPTY_LAYER = (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
         // NO-OP
     };
@@ -39,7 +39,7 @@ public class HoveringHotbarClient implements ClientModConstructor {
     private static void registerEventHandlers() {
         ClientTickEvents.END.register(HoveringHotbar.CONFIG.get(ClientConfig.class)::onEndClientTick);
         CustomizeChatPanelCallback.EVENT.register((GuiGraphics guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) -> {
-            posY.mapInt((int value) -> value - HoveringHotbar.CONFIG.get(ClientConfig.class).getHotbarOffset());
+            posY.mapAsInt((int value) -> value - HoveringHotbar.CONFIG.get(ClientConfig.class).getHotbarOffset());
         });
     }
 
@@ -92,8 +92,8 @@ public class HoveringHotbarClient implements ClientModConstructor {
         });
         // run this as late as possible, so we can wrap the most possible layers
         ClientLifecycleEvents.STARTED.register((Minecraft minecraft) -> {
-            for (ResourceLocation resourceLocation : HotbarSpriteHelper.HOTBAR_GUI_LAYER_LOCATIONS) {
-                context.replaceGuiLayer(resourceLocation, HotbarSpriteHelper::getLayerWithTranslation);
+            for (Identifier identifier : HotbarSpriteHelper.HOTBAR_GUI_LAYER_LOCATIONS) {
+                context.replaceGuiLayer(identifier, HotbarSpriteHelper::getLayerWithTranslation);
             }
         });
     }
