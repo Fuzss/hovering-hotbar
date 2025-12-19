@@ -10,7 +10,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class HoveringHotbarFabricClient implements ClientModInitializer {
 
@@ -23,9 +23,9 @@ public class HoveringHotbarFabricClient implements ClientModInitializer {
     private static void registerEventHandlers() {
         ClientLifecycleEvents.STARTED.register((Minecraft minecraft) -> {
             // our gui layer system does not support modded layers, so use the native event here
-            for (ResourceLocation resourceLocation : HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarGuiLayers) {
+            for (Identifier identifier : HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarGuiLayers) {
                 try {
-                    HudElementRegistry.replaceElement(resourceLocation, (HudElement hudElement) -> {
+                    HudElementRegistry.replaceElement(identifier, (HudElement hudElement) -> {
                         return HotbarSpriteHelper.getLayerWithTranslation(hudElement::render)::render;
                     });
                 } catch (Exception exception) {

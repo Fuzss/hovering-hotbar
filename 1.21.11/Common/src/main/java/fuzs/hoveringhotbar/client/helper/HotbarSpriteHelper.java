@@ -9,16 +9,16 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 
 import java.util.List;
 
 public class HotbarSpriteHelper {
-    private static final ResourceLocation HOTBAR_SELECTION_SPRITE = ResourceLocation.withDefaultNamespace(
+    private static final Identifier HOTBAR_SELECTION_SPRITE = Identifier.withDefaultNamespace(
             "hud/hotbar_selection");
-    public static final List<ResourceLocation> HOTBAR_GUI_LAYER_LOCATIONS = ImmutableList.of(GuiLayersContext.HOTBAR,
+    public static final List<Identifier> HOTBAR_GUI_LAYER_LOCATIONS = ImmutableList.of(GuiLayersContext.HOTBAR,
             GuiLayersContext.INFO_BAR,
             GuiLayersContext.EXPERIENCE_LEVEL);
 

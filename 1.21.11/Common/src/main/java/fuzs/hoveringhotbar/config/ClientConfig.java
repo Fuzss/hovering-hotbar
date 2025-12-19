@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import fuzs.puzzleslib.api.config.v3.Config;
 import fuzs.puzzleslib.api.config.v3.ConfigCore;
 import fuzs.puzzleslib.api.config.v3.ValueCallback;
-import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import net.minecraft.resources.Identifier;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class ClientConfig implements ConfigCore {
 
     private ModConfigSpec.IntValue hotbarOffsetValue;
     private int configSaveDelay;
-    public Set<ResourceLocation> hotbarGuiLayers;
+    public Set<Identifier> hotbarGuiLayers;
 
     public int getHotbarOffset() {
         return this.hotbarOffsetValue.getAsInt();
@@ -51,7 +51,7 @@ public class ClientConfig implements ConfigCore {
     @Override
     public void afterConfigReload() {
         this.hotbarGuiLayers = this.hotbarGuiLayersRaw.stream()
-                .map(ResourceLocationHelper::tryParse)
+                .map(Identifier::tryParse)
                 .filter(Objects::nonNull)
                 .collect(ImmutableSet.toImmutableSet());
     }
