@@ -1,22 +1,22 @@
-package fuzs.hoveringhotbar.client;
+package fuzs.hoveringhotbar.common.client;
 
-import fuzs.hoveringhotbar.HoveringHotbar;
-import fuzs.hoveringhotbar.client.helper.HotbarSpriteHelper;
-import fuzs.hoveringhotbar.config.ClientConfig;
-import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
-import fuzs.puzzleslib.api.client.core.v1.context.KeyMappingsContext;
-import fuzs.puzzleslib.api.client.event.v1.ClientLifecycleEvents;
-import fuzs.puzzleslib.api.client.event.v1.ClientTickEvents;
-import fuzs.puzzleslib.api.client.event.v1.gui.CustomizeChatPanelCallback;
-import fuzs.puzzleslib.api.client.key.v1.KeyActivationHandler;
-import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
-import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
-import fuzs.puzzleslib.api.event.v1.data.MutableInt;
+import fuzs.hoveringhotbar.common.HoveringHotbar;
+import fuzs.hoveringhotbar.common.client.helper.HotbarSpriteHelper;
+import fuzs.hoveringhotbar.common.config.ClientConfig;
+import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
+import fuzs.puzzleslib.common.api.client.core.v1.context.KeyMappingsContext;
+import fuzs.puzzleslib.common.api.client.event.v1.ClientLifecycleEvents;
+import fuzs.puzzleslib.common.api.client.event.v1.ClientTickEvents;
+import fuzs.puzzleslib.common.api.client.event.v1.gui.CustomizeChatPanelCallback;
+import fuzs.puzzleslib.common.api.client.key.v1.KeyActivationHandler;
+import fuzs.puzzleslib.common.api.client.key.v1.KeyMappingHelper;
+import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
+import fuzs.puzzleslib.common.api.event.v1.data.MutableInt;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
@@ -27,7 +27,7 @@ public class HoveringHotbarClient implements ClientModConstructor {
             HoveringHotbar.id("move_hotbar_down"));
     public static final Identifier LEFT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("left_hotbar_offset");
     public static final Identifier RIGHT_HOTBAR_OFFSET_LOCATION = HoveringHotbar.id("right_hotbar_offset");
-    private static final GuiLayersContext.Layer EMPTY_LAYER = (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
+    private static final GuiLayersContext.Layer EMPTY_LAYER = (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
         // NO-OP
     };
 
@@ -38,7 +38,7 @@ public class HoveringHotbarClient implements ClientModConstructor {
 
     private static void registerEventHandlers() {
         ClientTickEvents.END.register(HoveringHotbar.CONFIG.get(ClientConfig.class)::onEndClientTick);
-        CustomizeChatPanelCallback.EVENT.register((GuiGraphics guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) -> {
+        CustomizeChatPanelCallback.EVENT.register((GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) -> {
             posY.mapAsInt((int value) -> value - HoveringHotbar.CONFIG.get(ClientConfig.class).getHotbarOffset());
         });
     }
@@ -79,14 +79,14 @@ public class HoveringHotbarClient implements ClientModConstructor {
                 HotbarSpriteHelper.getLayerWithTranslation(HotbarSpriteHelper::blitHotbarSelectionSprite));
         // push the experience bar level text above the bar, similar to the legacy console edition
         context.replaceGuiLayer(GuiLayersContext.EXPERIENCE_LEVEL, (GuiLayersContext.Layer layer) -> {
-            return (GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
+            return (GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) -> {
                 if (HoveringHotbar.CONFIG.get(ClientConfig.class).moveExperienceAboveBar) {
                     guiGraphics.pose().pushMatrix();
                     guiGraphics.pose().translate(0.0F, -3.0F);
-                    layer.render(guiGraphics, deltaTracker);
+                    layer.extractRenderState(guiGraphics, deltaTracker);
                     guiGraphics.pose().popMatrix();
                 } else {
-                    layer.render(guiGraphics, deltaTracker);
+                    layer.extractRenderState(guiGraphics, deltaTracker);
                 }
             };
         });

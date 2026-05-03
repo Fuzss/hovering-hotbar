@@ -1,9 +1,10 @@
 {
+    "minecraft": "26.1.2",
     "mod": {
         "id": "hoveringhotbar",
         "group": "fuzs.hoveringhotbar",
         "name": "Hovering Hotbar",
-        "version": "21.11.0",
+        "version": "26.1.0",
         "authors": [
             "Fuzs"
         ],
@@ -37,7 +38,7 @@
     "links": [
         {
             "name": "github",
-            "slug": "hoveringhotbar"
+            "slug": "hovering-hotbar"
         }
     ],
     "environments": {

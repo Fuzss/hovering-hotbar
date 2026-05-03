@@ -1,8 +1,8 @@
-package fuzs.hoveringhotbar;
+package fuzs.hoveringhotbar.common;
 
-import fuzs.hoveringhotbar.config.ClientConfig;
-import fuzs.puzzleslib.api.config.v3.ConfigHolder;
-import fuzs.puzzleslib.api.core.v1.ModConstructor;
+import fuzs.hoveringhotbar.common.config.ClientConfig;
+import fuzs.puzzleslib.common.api.config.v3.ConfigHolder;
+import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

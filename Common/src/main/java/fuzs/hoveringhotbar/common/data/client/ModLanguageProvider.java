@@ -1,9 +1,9 @@
-package fuzs.hoveringhotbar.data.client;
+package fuzs.hoveringhotbar.common.data.client;
 
-import fuzs.hoveringhotbar.HoveringHotbar;
-import fuzs.hoveringhotbar.client.HoveringHotbarClient;
-import fuzs.puzzleslib.api.client.data.v2.AbstractLanguageProvider;
-import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
+import fuzs.hoveringhotbar.common.HoveringHotbar;
+import fuzs.hoveringhotbar.common.client.HoveringHotbarClient;
+import fuzs.puzzleslib.common.api.client.data.v2.AbstractLanguageProvider;
+import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
 
 public class ModLanguageProvider extends AbstractLanguageProvider {
 
