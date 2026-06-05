@@ -37,8 +37,18 @@
     ],
     "links": [
         {
+            "name": "curseforge",
+            "slug": "hovering-hotbar",
+            "id": "1565685"
+        },
+        {
             "name": "github",
             "slug": "hovering-hotbar"
+        },
+        {
+            "name": "modrinth",
+            "slug": "hovering-hotbar",
+            "id": "IJ4PIJR2"
         }
     ],
     "environments": {
