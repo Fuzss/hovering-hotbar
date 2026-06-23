@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v26.2.1-mc26.2.x] - 2026-06-23
+
+### Fixed
+
+- Fix hotbar sprite compatibility with mods such as [SmoothHud](https://modrinth.com/mod/smooth-hud)
+- Fix chat offset not applying when the chat is open
+
 ## [v26.2.0-mc26.2.x] - 2026-06-18
 
 ### Changed
