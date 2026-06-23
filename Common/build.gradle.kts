@@ -8,6 +8,6 @@ dependencies {
 
 multiloader {
     mixins {
-        clientMixin("ChatComponentMixin", "GuiMixin")
+        clientMixin("ChatComponentMixin", "HudMixin")
     }
 }
