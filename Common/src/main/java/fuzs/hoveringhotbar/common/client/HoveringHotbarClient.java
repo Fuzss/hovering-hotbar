@@ -8,11 +8,9 @@ import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.KeyMappingsContext;
 import fuzs.puzzleslib.common.api.client.event.v1.ClientLifecycleEvents;
 import fuzs.puzzleslib.common.api.client.event.v1.ClientTickEvents;
-import fuzs.puzzleslib.common.api.client.event.v1.gui.CustomizeChatPanelCallback;
 import fuzs.puzzleslib.common.api.client.key.v1.KeyActivationHandler;
 import fuzs.puzzleslib.common.api.client.key.v1.KeyMappingHelper;
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
-import fuzs.puzzleslib.common.api.event.v1.data.MutableInt;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -43,9 +41,6 @@ public class HoveringHotbarClient implements ClientModConstructor {
 
     private static void registerEventHandlers() {
         ClientTickEvents.END.register(HoveringHotbar.CONFIG.get(ClientConfig.class)::onEndClientTick);
-        CustomizeChatPanelCallback.EVENT.register((GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, MutableInt posX, MutableInt posY) -> {
-            posY.mapAsInt((int value) -> value - HoveringHotbar.CONFIG.get(ClientConfig.class).getHotbarOffset());
-        });
     }
 
     @Override
