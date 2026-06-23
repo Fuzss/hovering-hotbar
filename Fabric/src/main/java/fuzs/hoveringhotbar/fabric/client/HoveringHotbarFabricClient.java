@@ -2,7 +2,6 @@ package fuzs.hoveringhotbar.fabric.client;
 
 import fuzs.hoveringhotbar.common.HoveringHotbar;
 import fuzs.hoveringhotbar.common.client.HoveringHotbarClient;
-import fuzs.hoveringhotbar.common.client.helper.HotbarSpriteHelper;
 import fuzs.hoveringhotbar.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.event.v1.ClientLifecycleEvents;
@@ -26,7 +25,7 @@ public class HoveringHotbarFabricClient implements ClientModInitializer {
             for (Identifier identifier : HoveringHotbar.CONFIG.get(ClientConfig.class).hotbarGuiLayers) {
                 try {
                     HudElementRegistry.replaceElement(identifier, (HudElement hudElement) -> {
-                        return HotbarSpriteHelper.getLayerWithTranslation(hudElement::extractRenderState)::extractRenderState;
+                        return HoveringHotbarClient.getLayerWithTranslation(hudElement::extractRenderState)::extractRenderState;
                     });
                 } catch (Exception exception) {
                     // NO-OP
