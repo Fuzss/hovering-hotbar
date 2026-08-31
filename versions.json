@@ -1,8 +1,15 @@
 {
   "branches": {
-    "1.21.11": "archived",
     "1.21.1": "maintained",
+    "1.21.11": "archived",
     "26.1.x": "maintained",
     "26.2.x": "primary"
+  },
+  "properties": {
+    "distributions.curseforge.id": "1565685",
+    "distributions.curseforge.slug": "hovering-hotbar",
+    "distributions.github.slug": "hovering-hotbar",
+    "distributions.modrinth.id": "IJ4PIJR2",
+    "distributions.modrinth.slug": "hovering-hotbar"
   }
 }
