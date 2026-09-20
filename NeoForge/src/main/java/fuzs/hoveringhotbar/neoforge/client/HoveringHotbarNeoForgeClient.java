@@ -5,7 +5,7 @@ import fuzs.hoveringhotbar.common.client.HoveringHotbarClient;
 import fuzs.hoveringhotbar.common.config.ClientConfig;
 import fuzs.hoveringhotbar.common.data.client.ModLanguageProvider;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
+import fuzs.puzzleslib.neoforge.api.data.v3.core.DataProviderBuilder;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -20,7 +20,7 @@ public class HoveringHotbarNeoForgeClient {
     public HoveringHotbarNeoForgeClient(ModContainer modContainer) {
         ClientModConstructor.construct(HoveringHotbar.MOD_ID, HoveringHotbarClient::new);
         registerLoadingHandlers(modContainer.getEventBus());
-        DataProviderHelper.registerDataProviders(HoveringHotbar.MOD_ID, ModLanguageProvider::new);
+        DataProviderBuilder.of(HoveringHotbar.MOD_ID).addProvider(ModLanguageProvider::new);
     }
 
     private static void registerLoadingHandlers(IEventBus eventBus) {

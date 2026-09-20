@@ -33,7 +33,7 @@ public class ClientConfig implements ConfigCore {
 
     public void updateHotbarOffset(int screenHeight, boolean moveUp) {
         this.hotbarOffsetValue.set(Math.clamp(this.getHotbarOffset() + (moveUp ? 1 : -1), 0, screenHeight));
-        this.configSaveDelay = 20;
+        this.configSaveDelay = 40;
     }
 
     public void onEndClientTick(Minecraft minecraft) {
